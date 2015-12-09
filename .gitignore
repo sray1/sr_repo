@@ -1,3 +1,5 @@
 # Local config folder and symbol database
-.ipynb_checkpoints
-kaggle_face_detect/Data
+.ipynb_checkpoints/
+kaggle_face_detect/Data/training.csv
+kaggle_face_detect/*.Rdata
+kaggle_face_detect/data.Rd
