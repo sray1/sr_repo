@@ -1,0 +1,3 @@
+# Local config folder and symbol database
+/.ipynb_checkpoints
+/kaggle_face_detect/Data
