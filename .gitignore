@@ -3,3 +3,4 @@
 kaggle_face_detect/Data/training.csv
 kaggle_face_detect/*.Rdata
 kaggle_face_detect/data.Rd
+testing/
