@@ -64,6 +64,8 @@ save(d.train, im.train, d.test, im.test, file='data.Rd')
 # can reload them at any time with the following command
 load('data.Rd')
 
+##############################################################################
+
 # To visualize each image, we need to first convert these 9216 integers into 96x96 matrix
 # im.train[1,] returns first row of im.train, which corresponds to the first training 
 # image. rev reverse the resulting vector to match interpretation of R's image function
@@ -93,8 +95,7 @@ points(96-d.train$nose_tip_x[idx], 96-d.train$nose_tip_y[idx], col="red")
 # keypoint in the training set and use that as a prediction for all images. 
 # This is a very simplistic algorithm, as it completely ignores the images, but we can use it
 # a starting point to build a first submission
-# Computing the mean for each column is straightforward with colMeans 
-# (na.rm=T tells colMeans to ignore missing values).
+# Computing mean for each column is straightforward with colMeans na.rm=T ignores missing values.
 colMeans(d.train, na.rm=T)
 
 # apply these computed coordinates to the test instances:
@@ -119,7 +120,7 @@ submission <- merge(example.submission, submission, all.x=T, sort=F)
 submission <- submission[, sub.col.names]
 write.csv(submission, file="submission_means.csv", quote=F, row.names=F)
 
-# extract a patch around this keypoint in each image, and average the result. 
+# extract patch around this keypoint in each image, and average the result. 
 # This average_patch can then be used as a mask to search for the keypoint in test images
 
 # parameters
@@ -158,8 +159,7 @@ mean.patch <- matrix(data = colMeans(patches), nrow=2*patch_size+1, ncol=2*patch
 # if yes, return the image patch as a vector; if no, return NULL
 # All the non-NULL vectors will then be combined with rbind, which concatenates them as rows.
 # The result patches will be a matrix where each row is a patch of an image. 
-# We then compute the mean of all images with colMeans, put back in matrix format and store 
-# in mean.patch
+# We then compute mean of all images with colMeans, put back in matrix format and store in mean.patch
 
 # visualize the result with image
 image(1:21, 1:21, mean.patch[21:1,21:1], col=gray((0:255)/255))
@@ -184,8 +184,7 @@ params
 
 # Given a test image we need to try all these combinations, and see which one best matches 
 # the average_patch. We will do that by taking patches of the test images around these points 
-# and measuring their correlation with the average_patch. Take the first test image as
-# an example:
+# and measuring their correlation with the average_patch. Take the first test image as an example:
 im <- matrix(data = im.test[1,], nrow=96, ncol=96)
 
 r  <- foreach(j = 1:nrow(params), .combine=rbind) %dopar% {
@@ -197,7 +196,7 @@ r  <- foreach(j = 1:nrow(params), .combine=rbind) %dopar% {
   data.frame(x, y, score)
 }
 
-# nside the for loop, given a coordinate we extract an image patch p and compare it 
+# Inside the for loop, given a coordinate we extract an image patch p and compare it 
 # to the average_patch with cor. The ifelse is necessary for the cases where all the image
 # patch pixels have the same intensity, as in this case cor returns NA. The result will 
 # look like this:
