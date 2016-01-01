@@ -5,3 +5,5 @@ kaggle_face_detect/*.Rdata
 kaggle_face_detect/data.Rd
 knn/cifar-10-python.tar
 knn/cifar-10-python.tar.gz
+testing/knn/cifar-10-python.tar
+testing/knn/cifar-10-python.tar.gz
